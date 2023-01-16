@@ -1,4 +1,6 @@
-## YOUR CLASSIFIER IS SECRETLY AN ENERGY BASED MODEL AND YOU SHOULD TREAT IT LIKE ONE
+### YOUR CLASSIFIER IS SECRETLY AN ENERGY BASED MODEL AND YOU SHOULD TREAT IT LIKE ONE
+
+http://arxiv.org/abs/1912.03263
 
 Energy-based-models은 $\mathbf{x\in}\mathbb{R}^D$에 대한 probability density $p(\mathbf{x})$에 의존하며 다음과 같이 나타낼 수 있다.
 
