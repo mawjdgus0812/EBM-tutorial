@@ -8,3 +8,5 @@ An Introduction to MCMC for Machine Learning
 MCMC : https://github.com/Joseph94m/MCMC/blob/master/MCMC.ipynb
 
 Gibbs sampling : https://jehyunlee.github.io/2021/04/20/Python-DS-69-gibbsampling/
+
+Importance sampling : https://pasus.tistory.com/52
