@@ -61,5 +61,12 @@ $$
 임의의 scalar로부터온 logits $f_\theta(\mathbf{x})$의 이동(shifting)이 모델에 영향을 주지 못하는 일반적인 classifier와는 다르게, 위 framework에서 데이터 포인트에 대한 logits의 이동(shifting)은 데이터 포인트 $\mathbf{x}$에 대해 $\log p_\theta(\mathbf{x})$의 영향을 준다. 따라서, 이 프레임워크에서는 입력 데이터에 대한 density function으로써 사용할 뿐만 아니라 데이터와 label에 대한 joint density 에 대해서 정의하기 위해 logits을 사용함으로써 발생할 수 있는 숨겨진 자유도를 사용할 수 있도록 만들어낸다. 최종적으로 $p_\theta(\mathbf{x},y)/p_\theta(\mathbf{x})$를 계산함으로써  $p_\theta(y|\mathbf{x})$를 구함으로써, normalizing constant가 없어지고, standard Softmax parameterization을 창출한다. 따라서 이 모델은 모든 discriminative model에 있는 숨겨진 generative model을 발견했다고 할 수 있다.
 
 ---
+이를 Optimization하기 위해서는 새로운 해석으로 classifier architecture를 바라볼 것이다. 우리의 모델의$p(y|\mathbf{x})$의 parameterization 는 $y$에 대하여 normalized되어있다. 이것은 간단하게 standard classifier training을 하면 likelihood를 maximize하는 것이다. 우리의 모델이 $p(\mathbf{x})$ 와 $p(\mathbf{x},y)$는 unnormalized되었기 때문에, 이것들의 likelihood를 maximizing하는 일은 쉽지 않다. 많은 $f_\theta$를 likelihood를 maximize하기위한 트레인 방법이 존재한다. 우리는 gradient estimator of Equation 2 를 joint distribution of Equation 5의 likelihood에 적욕할 수 있다. 
+
+$$
+\log p_\theta(\mathbf{x},y)=\log p_\theta(\mathbf{x})+\log p_\theta(y|\mathbf{x})
+$$
+
+Eq2의 추령량은 MCMC sampler를 유한한 스텝으로 사용할 때 편향된다. 우리의 목표는 EBM training을 standard classification setting에 합치는 것이고, $p(y|\mathbf{x})$에 관심이 있다. 이러한 이유들로, 우리는 바로 위 식의 factorization을 사용해서 훈련을 할 거다. 이는 unbiased objective로 optimized될 수 있다.
 
 
