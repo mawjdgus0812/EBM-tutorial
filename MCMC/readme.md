@@ -22,6 +22,10 @@ Markov Chain은 어떤 상태에서 다른 상태로 넘어갈 때, 바로 전 �
 처럼 어제 상태에만 영향을 받는 과정을 마르코프 성질(Markov property)를 가진다고 하며, 이러한 확률 과정을 Markov chain이라 한다.
 MCMC는 샘플링 방법줌, 가장 마지막에 뽑힌 샘플이 다음번 샘플에 영향을 주는 의미에서 Markov chain이 들어갔다고 볼 수 있다.
 
+이런 MCMC가 왜 중요하냐 ?
+
+Energy based model과 같이 우리가 어떤 intratable한 integral을 직접 계산해서 구하는 것은 매우 비용이 많이든다. MCMC는 고차원의 데이터에서의 sampling을 가능케 하고 sampling을 통해 계산할 수 없었던 integral과 같은 것들에 대해 근사할 수 있도록 해준다.
+
 
 - ## Rejection Sampling
 
