@@ -24,7 +24,7 @@ MCMC는 샘플링 방법줌, 가장 마지막에 뽑힌 샘플이 다음번 샘�
 
 이런 MCMC가 왜 중요하냐 ?
 
-Energy based model과 같이 우리가 어떤 intratable한 integral을 직접 계산해서 구하는 것은 매우 비용이 많이든다. MCMC는 고차원의 데이터에서의 sampling을 가능케 하고 sampling을 통해 계산할 수 없었던 integral과 같은 것들에 대해 근사할 수 있도록 해준다.
+Energy based model과 같이 우리가 어떤 intratable한 integral을 직접 계산해서 구하는 것은 매우 비용이 많이든다. MCMC는 고차원의 데이터에서의 sampling을 가능케 하고 sampling을 통해 계산할 수 없었던 integral과 같은 것들에 대해 근사할 수 있도록 해준다. MCMC를 보면서 여러가지 sampling 기법들을 함께 알아보고 최종적으로 SGLD가 실제 고차원의 데이터에서 어떻게 사용되는지 알아보자.
 
 
 - ## Rejection Sampling
