@@ -2,6 +2,8 @@
 
 http://arxiv.org/abs/1912.03263
 
+https://github.com/wgrathwohl/JEM
+
 Energy-based-models은 $\mathbf{x\in}\mathbb{R}^D$에 대한 probability density $p(\mathbf{x})$에 의존하며 다음과 같이 나타낼 수 있다.
 
 $$
