@@ -66,7 +66,7 @@ $$
 p(\theta^\prime|\theta)p^\*(\theta)=p(\theta|\theta^\prime)p^\*(\theta^\prime).
 $$
 
-여기서 detailed balance condition이 의미하는 것은 두 상태 $\theta$ and $\theta^\prime$ 사이에 존재하는 흐름의 비율이 항상 두 방향 모두 같게($\theta\rightarrow\theta^\prime\:\text{and}\:\theta^\prime\rightarrow\theta$) 만들어 줌을 의미한다. 이러한 detailed balance조건을 만족하는 Markov chain을 ***reversible***이라고 부른다. 이것이 $p^*(\theta)$가 Markov chain의 invariant distribution으로써 가질 수 있는 충분조건임을 다음과 같이 쉽게 보일 수 있다.
+여기서 detailed balance condition이 의미하는 것은 두 상태 $\theta$ and $\theta^\prime$ 사이에 존재하는 흐름의 비율이 항상 두 방향 모두 같게( $\theta\rightarrow\theta^\prime\:\text{and}\:\theta^\prime\rightarrow\theta$ ) 만들어 줌을 의미한다. 이러한 detailed balance조건을 만족하는 Markov chain을 ***reversible***이라고 부른다. 이것이 $p^*(\theta)$가 Markov chain의 invariant distribution으로써 가질 수 있는 충분조건임을 다음과 같이 쉽게 보일 수 있다.
 
 $$
 \sum_\theta p(\theta^\prime|\theta)p^\*(\theta)=\sum_\theta p(\theta|\theta^\prime)p^\*(\theta^\prime)=p^\*(\theta^\prime)\sum_\theta p(\theta|\theta^\prime)=p^\*(\theta^\prime).
