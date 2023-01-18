@@ -66,6 +66,8 @@ homogeneous Markov chain에서, a distribution $p^*(\theta)$는 아래 조건을
 
 $$p^*(\theta^\prime)=\sum_{\theta} {p(\theta^\prime|\theta)p^\*(\theta)}$$
 
+<!-- 위 식의 의미를 풀어보면, 현재 state에 대한 target distribution에 대한 trainsition probability의 기댓값이 다음 state에 대한 target distribution에 대한 기댓값과 같다는 의미이다. -->
+
 MCMC에서, 우리가 원하는 것은 Markov chain이 invariant한 어떤 특정한 distribution을 가지도록 하는 것이다. 이러한 distribution은 우리가 Monte Carlo estimation을 통해 얻을 추정값을 위해 사용되는 샘플을 얻기 위한 posterior distribution이다.
 
 이러한 ***invariant한 특정한 distribution을 얻는 한가지 확실한 방법***은, transition probability를 다음과 같은 방법을 통해서 ***detailed balance condition***을 만족시켜 주면 된다. 
