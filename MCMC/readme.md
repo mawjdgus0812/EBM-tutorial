@@ -7,7 +7,7 @@
 
 아주아주 간단하게 두 방법론에 대해 설명하자면 다음과 같다.
 
-Markov chain은 우리가 관심있어 하는 어떠 분포(posterior distribution)로부터 샘플링하는 방법이다.
+Markov chain은 우리가 관심있어 하는 어떤 분포(posterior distribution)로부터 샘플링하는 방법이다.
 
 Monte Carlo는 이렇게 뽑은 샘플을 사용해서 기댓값을 근사하는 방법이다.
 
