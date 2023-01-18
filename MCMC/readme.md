@@ -1,26 +1,42 @@
-# MCMC
+# Markov Chain Monte Carlo
 
-위키 피디아 정의에 의하면, Markov Chain Monte Carlo, "MCMC는 마르코프 연쇄 구성에 기반한 확률 분포로부터 분포의 정적 분포(stationary)를 갖는 표본을 추출하는 알고리즘의 분류" 라고 한다. 한마디로 하면 샘플링 방법이다.
+이름에 들어있는 Markov Chain과 Monte Carlo가 무엇인지 살펴보도록 하자.
 
-Monte Carlo
+1. Monte Carlo
+2. Markov Chain
 
-Monte Carlo는 쉽게 말하면, 평균과 분산과 같은 통계적 수치를 얻기 위해 계산이 아니라 실제로 수행하는 방법이다.
+아주아주 간단하게 두 방법론에 대해 설명하자면 다음과 같다.
 
-굳이 이렇게 실제로 수행하는 이유는, 통계는 무한히 많은 시도를 거쳐야지 정답에 가까워지지만, 실제로 이렇게 무한하게 시행하는건 불가능하기 때문에, 유한한 시도만으로 정답을 추정하는 작업이 필요하다. 그리고 그러한 방법 중 하나가 Monte Carlo방법이다.
+Markov chain은 우리가 관심있어 하는 어떠 분포(posterior distribution)로부터 샘플링하는 방법이다.
 
-가장 흔한 예시로, 원의 넓이를 구하는 예시가 있는데,
+Monte Carlo는 이렇게 뽑은 샘플을 사용해서 기댓값을 근사하는 방법이다.
 
-정사각형 안에 무수히 많은 점을 찍으면서, 중심으로부터 거리가 1이하면 빨간색, 아니면 파란색으로 칠해 줌으로써, 전체적으로 찍은 점의 개수와 빨간색으로 찍힌 점의 개수의 비율을 계산해서 원래 사각형 면적을 곱해주면 원의 넓이를 대략적으로 추정할 수 있다. 
+두 방법에 대해 조금 더 자세히 들엳 보도록 해보자.
 
-Markov Chain
+## Monte Carlo Method
 
-Markov Chain은 어떤 상태에서 다른 상태로 넘어갈 때, 바로 전 단계의 상태에만 영향을 받는 확률 과정을 의미한다.
+머신러닝에서, 분포 $p(\theta)$에 대한 기댓값 $f^*=\mathbb{E}[f(\theta)]$를 계산하는 것은 중요하다. Monte Carlo 방법은, 이러한 기댓값(integration when computing the exact value is intractable)을 근사하기 위해 사용하는 방법이다. 가장 일반적인 Monte Carlo 방법론의 아이디어는, 적분 불가능한 값을 분포 $p(\theta)$의 유한한 개수의 샘플로부터의 합으로 근사하는 아이디어이다. 구체적으로 설명하자면, $L$ samples $\{\theta^{(l)}\}^L_{l=1}$이 $p(\theta)$로 부터 샘플링 되었을 때, 우리는 기댓값을 다음과 같이 추정할 수 있다.
 
-어제 비가왔을 때 오늘 비가 올 확률이 이만큼.
-어제 비가 안오면 오늘 비가 올 확률이 이만큼.
+$$f^*\approx f_L = {1\over{L}}\sum^L_{l=1}f(\theta^{(l)})$$.
 
-처럼 어제 상태에만 영향을 받는 과정을 마르코프 성질(Markov property)를 가진다고 하며, 이러한 확률 과정을 Markov chain이라 한다.
-MCMC는 샘플링 방법줌, 가장 마지막에 뽑힌 샘플이 다음번 샘플에 영향을 주는 의미에서 Markov chain이 들어갔다고 볼 수 있다.
+예를 들어, Bayesian inference에서는 우리는 posterior distribution으로 부터 샘플링을 해 posterior predictive distribution에 대해 근사할 수 있다.
+
+$$p(y^\prime|x^\prime,\mathcal{D})=\mathbb{E}_{\theta|\mathcal{D}}[p(y^\prime|x^\prime,\theta)]=\int p(y^\prime|x^\prime,\theta)p(\theta|\mathcal{D})\text{d}\theta\approx{1\over{L}}\sum^L_{l=1}p(y^\prime|x^\prime,\theta^{(l)}).$$
+
+여기서 $\theta^{(l)}\sim p(\theta|\mathcal{D})$이다.
+
+이러한 Monte Carlo 추정은 편향되어있지 않는데, 왜냐면 $\mathbb{E}[f_L]=f^*$이기 때문이고, 이는 큰 수의 법칙으로 인해 샘플이 많아지면 많아질 수록 almost surely converge된다.
+
+$$f_L\rightarrow f^*$$
+
+또한 중심극한정리로 인해서 variance 는 다음과 같다.
+
+$$\text{var}[f_L]={\text{var}[f]\over{L}}$$
+
+따라서 샘플이 많아지면 많아질수록 높은 정확도르 얻을 수 있다.
+
+이제 문제는 이러한 "target distribution으로부터 샘플을 어떻게 얻을 것인가 ?" 이다. 특별히, 우리가 $p(\theta)$의 unnormalized part $\tilde{p}(\theta)$에 대해 평가할 때이다. 이 때, inverse cdf method, rejection sampling, importance sampling과 같으 방법들이 있지만 해당 방법론들은 각각의 문제점이 존재한다. 따라서 Markov chain Monte Carlo가 이 문제를 해결하기 위해 등장한다.
+
 
 이런 MCMC가 왜 중요하냐 ?
 
