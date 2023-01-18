@@ -124,8 +124,6 @@ Gibbs sampling is commonly used as a means of statistical inference, especially 
 
 As with other MCMC algorithms, Gibbs sampling generates a Markov chain of samples, each of which is correlated with nearby samples. As a result, care must be taken if independent samples are desired. Generally, samples from the beginning of the chain (the burn-in period) may not accurately represent the desired distribution and are usually discarded.
 
-### Gibbs Sampling
-
 Gibbs sampling은 강력한 MCMC알고리즘으로, 
 
 Gibbs sampling을 coordinate-wise sampling method로 볼 수 있다. 좀 더 구체적으로, distribution $p(\theta)=p(\theta_1,...,\theta_D)$로 부터 샘플링 하기 를 원한다고 해보자. 우리는 $\theta$의 $i$ 번째 요소를 $\theta_i$라 하고, $\theta_{\\i}$ 를 $\theta_i$를 제외한 모든 $\theta_1,..,\theta_D$라고 할 것이다. Gibbs sampling은 conditional distribution $p(\theta_i|\theta_{\\i})$를 proposal distribution으로서 사용하고, $i$를 component index로 변환시키면서 샘플을 뽑는다.
@@ -155,8 +153,6 @@ In statistics, Markov chain Monte Carlo (MCMC) methods comprise a class of algor
 
 ---
 - ## Metropolis-Hastings Algorithm
-
-### Metropolis-Hastings Algorithm
 
 MCMC의 가장 대표적인 알고리즘으로 Metropolis-Hastings라는 알고리즘이 존재한다. 이 알고리즘은 다음과 같이 작동한다. 현재 state $\theta^{(t)}$, iteration $t$ 에서, 우리는 proposal sample $\theta^\prime$을 proposal distribution $q(\theta^\prime|\theta^{(t)})$에서 부터 추출한다. 이 때, proposal distribution은 우리가 정해주면 된다. 그러고나서, proposed sample $\theta^\prime$이 accept-reject test를 통과하여 acceptance probability를 다음과 같이 계산해준다.
 
