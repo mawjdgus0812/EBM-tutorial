@@ -12,7 +12,7 @@
 
 ## Markcov Chain Monte Carlo
 1. [Stochastic Gradient MCMC: Algorithms and Applications(paper)](https://escholarship.org/uc/item/4k8039zm)
-2. [Markov Chain Tutorial](https://github.com/mawjdgus0812/EBM-tutorial/tree/main/MCMC)
+2. [Markov Chain Monte Carlo](https://github.com/mawjdgus0812/EBM-tutorial/tree/main/MCMC)
   - [Rejection Sampling](https://github.com/mawjdgus0812/EBM-tutorial/blob/main/MCMC/Rejection%20sampling.ipynb)
   - [Importance Sampling](https://github.com/mawjdgus0812/EBM-tutorial/blob/main/MCMC/Importance%20sampling.ipynb)
   - [Markov Chains](https://github.com/mawjdgus0812/EBM-tutorial/blob/main/MCMC/Markov_Chains.ipynb)
