@@ -52,7 +52,15 @@ $$
 1. defining the initial distribution $p(\theta^{(0)})$,
 2. defining the transition probabilities $p_t(\theta^{(t+1)}|\theta^{(t)})$ for all $t$.
 
-Markov chain은 homogeneous 혹은 time invariant라고도 불리는데, ***모든 $t$에 대해서 transition probabilities가 항상 같을 때*** 이렇게 부른다. 그리고 만약 transition probabilities가 distribution을 변화시키기 않는다면, 이러한 Markov chain의 distribution을 invariant하다고 말한다.
+Markov chain은 임의의 initial state에서 시작해서, 다음 state로, transition probability에 의해 움직인다.
+
+이러한 Markov chain은 memoryless라고도 불리는데, 위의 조건처럼 다음 state가 바로 이전 state에만 영향을 받는 성질을 말한다.
+
+만약 Markov chain에서의 transition probability가 항상 같으면, homogeneous 혹은 time invariant라고도 불리는데, ***모든 $t$에 대해서 transition probabilities가 항상 같다***. 이러한 homogeneous한 성질은 chain이 $t\rightarrow\infty$로 진행되면 될수록, stationary distribution이라고 불리는 equilibrium에 도달하는 성질이다. 
+
+$$p(\theta^{(t+1)}|\theta^{(t)})=p(\theta^{(t)}|\theta^{(t-1)})$$
+
+그리고 만약 transition probabilities가 distribution을 변화시키기 않는다면, 이러한 Markov chain의 distribution을 invariant하다고 말한다.
 
 homogeneous Markov chain에서, a distribution $p^*(\theta)$는 아래 조건을 만족할 때, invariant하다.
 
