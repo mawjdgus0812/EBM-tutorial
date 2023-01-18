@@ -35,7 +35,7 @@ $$\text{var}[f_L]={\text{var}[f]\over{L}}$$
 
 이제 문제는 이러한 "target distribution으로부터 샘플을 어떻게 얻을 것인가 ?" 이다. 특별히, 우리가 $p(\theta)$의 unnormalized part $\tilde{p}(\theta)$에 대해 평가할 때이다. 이 때, inverse cdf method, rejection sampling, importance sampling과 같은 방법들이 있지만 해당 방법론들은 각각의 문제점이 존재한다. 따라서 Markov chain Monte Carlo가 이 문제를 해결하기 위해 등장한다.
 
-## Markov Chains
+## [Markov Chains](https://github.com/mawjdgus0812/EBM-tutorial/blob/main/MCMC/Markov_Chains.ipynb)
 
 $t=1,...,T$에서 아래의 conditional independence를 
 
@@ -95,7 +95,9 @@ $$
 Energy based model과 같이 우리가 어떤 intratable한 integral을 직접 계산해서 구하는 것은 매우 비용이 많이든다. MCMC는 고차원의 데이터에서의 sampling을 가능케 하고 sampling을 통해 계산할 수 없었던 integral과 같은 것들에 대해 근사할 수 있도록 해준다. MCMC를 보면서 여러가지 sampling 기법들을 함께 알아보고 최종적으로 SGLD가 실제 고차원의 데이터에서 어떻게 사용되는지 알아보자.
 
 
-- ## Rejection Sampling
+- ## [Rejection Sampling](https://github.com/mawjdgus0812/EBM-tutorial/blob/main/MCMC/Rejection%20sampling.ipynb)
+
+
 
 Rejection Sampling이란 어떤 특정 확률 분포(target density) $f(x)$에서 샘플을 추출할 때, 우리가 이러한 target function의 pdf는 알고 있지만, 그 함수에서 직접 샘플링하는 것이 어렵거나 불가능할 때 사용되는 방법이다.
 
@@ -111,7 +113,7 @@ Set $i=1$ Repeat until $i=N$
 ![Screenshot 2023-01-19 at 4 39 21](https://user-images.githubusercontent.com/111332590/213278231-8b6b7cd9-a02f-49a6-9ad1-39d237944213.png)
 
 ---
-- ## Importance Sampling
+- ## [Importance Sampling](https://github.com/mawjdgus0812/EBM-tutorial/blob/main/MCMC/Importance%20sampling.ipynb)
 
 Rejection Samplig(기각 샘플링)의 경우, 샘플 추출시에 reject 비율이 굉장히 크다. 따라서 원하는 크기의 표본을 얻기까지 오랜시간이 걸리게 된다. 이러한 단점을 보완하는 샘플링 방법중에, wasted sample이 없도록 표본추출하는 방법을 Inportance sampling이라고 한다.
 
@@ -165,7 +167,7 @@ $$p(y^\prime|x^\prime,\mathcal{D})=\mathbb{E}_{\theta|\mathcal{D}}[p(y^\prime|x^
 이 때, 위 식을 구하기 위해서는 posterior distribution에서의 sampling과정이 필요한데, 이러한 과정이 일반적인 sampling으로 쉽게 진행될 수 없다. 고차원의 데이터에서도 잘 작동하는 여러 MCMC sampling을 통해 이를 가능케 할 수 있다.
 
 ---
-- ## Gibbs Sampling
+- ## [Gibbs Sampling](https://github.com/mawjdgus0812/EBM-tutorial/blob/main/MCMC/Gibbs%20sampling.ipynb)
 
 Gibbs sampling은 강력한 MCMC알고리즘으로, 
 
@@ -190,7 +192,7 @@ $$
 Gibbs sampling의 가장 치명적인 단점은 conditional posterior distribution으로부터 샘플링이 쉽게 되어야 한다는 점이다. (이부분 만족시키기가 어렵지 않을까)
 
 ---
-- ## Metropolis-Hastings Algorithm
+- ## [Metropolis-Hastings Algorithm](https://github.com/mawjdgus0812/EBM-tutorial/blob/main/MCMC/Metropolis-Hastings.ipynb)
 
 MCMC의 가장 대표적인 알고리즘으로 Metropolis-Hastings라는 알고리즘이 존재한다. 이 알고리즘은 다음과 같이 작동한다. 현재 state $\theta^{(t)}$, iteration $t$ 에서, 우리는 proposal sample $\theta^\prime$을 proposal distribution $q(\theta^\prime|\theta^{(t)})$에서 부터 추출한다. 이 때, proposal distribution은 우리가 정해주면 된다. 그러고나서, proposed sample $\theta^\prime$이 accept-reject test를 통과하여 acceptance probability를 다음과 같이 계산해준다.
 
@@ -215,7 +217,7 @@ continuous space에서, proposal distribution( $q(\theta^\prime|\theta))$ )는 G
 Gaussian proposal distribution을 사용했을 때 한가지 문제점은, 우리가 실제로 target probability distribution의 gradient를 사용하여 acceptance probability를 결정하는 것과 같이 명확한 direction을 가지고 step을 이어 가는 것을 고려할 수 없다는 점이다.
 
 ---
-- ## Stochastic Gradient Langevin Dynamics
+- ## [Stochastic Gradient Langevin Dynamics](https://github.com/mawjdgus0812/EBM-tutorial/tree/main/MCMC/SGLD)
 
 Stochastic gradient Langevin dynamics (SGLD) is an optimization and sampling technique composed of characteristics from Stochastic gradient descent, a Robbins–Monro optimization algorithm, and Langevin dynamics, a mathematical extension of molecular dynamics models. Like stochastic gradient descent, SGLD is an iterative optimization algorithm which uses minibatching to create a stochastic gradient estimator, as used in SGD to optimize a differentiable objective function. Unlike traditional SGD, SGLD can be used for Bayesian learning as a sampling method. SGLD may be viewed as Langevin dynamics applied to posterior distributions, but the key difference is that the likelihood gradient terms are minibatched, like in SGD. SGLD, like Langevin dynamics, produces samples from a posterior distribution of parameters based on available data. First described by Welling and Teh in 2011, the method has applications in many contexts which require optimization, and is most notably applied in machine learning problems.
 
