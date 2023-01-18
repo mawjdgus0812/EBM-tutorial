@@ -2,7 +2,7 @@
 
 이름에 들어있는 Markov Chain과 Monte Carlo가 무엇인지 살펴보도록 하자.
 
-1. [Monte Carlo](https://github.com/mawjdgus0812/EBM-tutorial/edit/main/MCMC/readme.md?plain=1#L16)
+1. Monte Carlo
 2. Markov Chain
 
 아주아주 간단하게 두 방법론에 대해 설명하자면 다음과 같다.
