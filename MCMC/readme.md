@@ -111,6 +111,33 @@ As with other MCMC algorithms, Gibbs sampling generates a Markov chain of sample
 In statistics, Markov chain Monte Carlo (MCMC) methods comprise a class of algorithms for sampling from a probability distribution. By constructing a Markov chain that has the desired distribution as its equilibrium distribution, one can obtain a sample of the desired distribution by recording states from the chain. The more steps that are included, the more closely the distribution of the sample matches the actual desired distribution. Various algorithms exist for constructing chains, including the Metropolis–Hastings algorithm.
 
 ---
+- ## Metropolis-Hastings
+
+### Metropolis-Hastings Algorithm
+
+MCMC의 가장 대표적인 알고리즘으로 Metropolis-Hastings라는 알고리즘이 존재한다. 이 알고리즘은 다음과 같이 작동한다. 현재 state $\theta^{(t)}$, iteration $t$ 에서, 우리는 proposal sample $\theta^\prime$을 proposal distribution $q(\theta^\prime|\theta^{(t)})$에서 부터 추출한다. 이 때, proposal distribution은 우리가 정해주면 된다. 그러고나서, proposed sample $\theta^\prime$이 accept-reject test를 통과하여 acceptance probability를 다음과 같이 계산해준다.
+
+$$
+\displaystyle{\alpha(\theta^\prime|\theta^{(t)})=\min(1,{q(\theta^{(t)}|\theta^\prime)\tilde{p}(\theta^\prime)\over{q(\theta^\prime|\theta^{(t)}\tilde{p}(\theta^{(t)}))}})}.
+$$
+
+여기서 주의해서 볼 점은, $\tilde{p}(\theta)$인데, 이 확률밀도는 unnormalized probability density이며, 우리는 이 값을 측정하는 것을 필요로 한다. acceptance probability가 주어졌을 때, 만약에 주어진 acceptance probability $\alpha$가 uniform distribution으로 부터 샘플링된 샘플보다 큰 경우, 우리는 proposed sample $\theta^\prime$을 다음 state로 채택한다. 반대의 경우에는 $\theta^{(t)}$를 다음 state로 복사한다. 수도코드는 아래의 알고리즘과 같다.
+
+![Screenshot 2023-01-18 at 23 16 43](https://user-images.githubusercontent.com/111332590/213194471-916c2ba1-e943-4f98-8c23-c8c7f3f909e4.png)
+
+여기서 Metropolis-Hasting algorithm은 $p(\theta)$가 invariant distribution임을 다음으로써 쉽게 보여줄 수 있다.
+
+$$
+p(\theta)q(\theta^\prime|\theta)\alpha(\theta^\prime|\theta)=\min(p(\theta)q(\theta^\prime|\theta),p(\theta^\prime)q(\theta|\theta^\prime))=\min(p(\theta^\prime)q(\theta|\theta^\prime),p(\theta)q(\theta^\prime|\theta))=p(\theta^\prime)q(\theta|\theta^\prime)\alpha(\theta|\theta^\prime)
+$$
+
+continuous space에서, proposal distribution( $q(\theta^\prime|\theta))$ )는 Gaussian distribution을 사용한다. 이 때, current state를 mean으로 설정하고 variance는 사용자가 설정한다.
+
+이러한 특정한 알고리즘을 우리는 random walk Metropolis (RWM) algorithm이라고 부른다. RWM에서, Gaussian proposal distribution의 variance parameter를 적절하게 설정하는 것이 중요하다. 만약 작은 값을 사용하게되면 높은 acceptance rate를 가지지만, mixing rate가 poor해진다. 반대로, 큰 variance를 사용하게되면 chain이 많이 이동하기 때문에, 큰 step을 가지고 accepted된다. 그러나 acceptance rate가 작아진다.
+
+Gaussian proposal distribution을 사용했을 때 한가지 문제점은, 우리가 실제로 target probability distribution의 gradient를 사용하여 acceptance probability를 결정하는 것과 같이 명확한 direction을 가지고 step을 이어 가는 것을 고려할 수 없다는 점이다.
+
+---
 - ## Stochastic Gradient Langevin Dynamics
 
 Stochastic gradient Langevin dynamics (SGLD) is an optimization and sampling technique composed of characteristics from Stochastic gradient descent, a Robbins–Monro optimization algorithm, and Langevin dynamics, a mathematical extension of molecular dynamics models. Like stochastic gradient descent, SGLD is an iterative optimization algorithm which uses minibatching to create a stochastic gradient estimator, as used in SGD to optimize a differentiable objective function. Unlike traditional SGD, SGLD can be used for Bayesian learning as a sampling method. SGLD may be viewed as Langevin dynamics applied to posterior distributions, but the key difference is that the likelihood gradient terms are minibatched, like in SGD. SGLD, like Langevin dynamics, produces samples from a posterior distribution of parameters based on available data. First described by Welling and Teh in 2011, the method has applications in many contexts which require optimization, and is most notably applied in machine learning problems.
