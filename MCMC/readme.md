@@ -115,6 +115,30 @@ Gibbs sampling is commonly used as a means of statistical inference, especially 
 
 As with other MCMC algorithms, Gibbs sampling generates a Markov chain of samples, each of which is correlated with nearby samples. As a result, care must be taken if independent samples are desired. Generally, samples from the beginning of the chain (the burn-in period) may not accurately represent the desired distribution and are usually discarded.
 
+### Gibbs Sampling
+
+Gibbs sampling은 강력한 MCMC알고리즘으로, 
+
+Gibbs sampling을 coordinate-wise sampling method로 볼 수 있다. 좀 더 구체적으로, distribution $p(\theta)=p(\theta_1,...,\theta_D)$로 부터 샘플링 하기 를 원한다고 해보자. 우리는 $\theta$의 $i$ 번째 요소를 $\theta_i$라 하고, $\theta_{\\i}$ 를 $\theta_i$를 제외한 모든 $\theta_1,..,\theta_D$라고 할 것이다. Gibbs sampling은 conditional distribution $p(\theta_i|\theta_{\\i})$를 proposal distribution으로서 사용하고, $i$를 component index로 변환시키면서 샘플을 뽑는다.
+
+예를들어 $D=3$이라고 할때, 각 iteration $t$에서, 우리는 sampling을 다음과 같이 할 수 있다.
+
+$$
+\theta_1^{(t+1)}\sim p(\theta_1|\theta_2^{(t)},\theta_3^{(t)}),\:\theta_2^{(t+1)}\sim p(\theta_2|\theta_1^{(t+1)},\theta_3^{(t)}),\: \text{and}\:\:\theta_3^{(t+1)}\sim p(\theta_3|\theta_1^{(t+1)},\theta_2^{(t+1)})
+$$
+
+![Screenshot 2023-01-19 at 3 51 46](https://user-images.githubusercontent.com/111332590/213268855-3d58ff8b-28f8-4297-9f7e-94aa8f2ecf4a.png)
+
+각각의 업데이트는 distribution의 invariant를 보존한다. $i$번째 component를 업데이트할 때, marginal distribution $p(\theta_{\\i})$는 바뀌지 않는다. 왜냐면 remaining variables인 $\theta_{\\i}$를 업데이트 하지 않기 때문이다. 그리고  정의에 의해 우리는 conditional distribution $p(\theta_i,\theta_{\\i})$로부터 정확히 샘플링 한다. 따라서 joint distribution은 invariant하다.
+
+Gibbs sampling은 Metropolis-Hasting algorithm의 한 종류로 볼 수 있는데, proposal distribution이 conditional distribution인 $q(\theta_i|\theta)=p(\theta_i|\theta_{\\i})$인 경우로 볼 수 있다. 그렇다면 $\min(1, r)$에서의 ratio $r$은 항상 1이되며 따라서 언제나 proposal이 accept된다.
+
+$$
+{p(\theta^\prime_i|\theta_{\\i})p(\theta_{\\i})\over{p(\theta_i|\theta_{\\i})p(\theta_{\\i})}}\times{p(\theta_i|\theta_{\\i})\over{p(\theta^\prime_i|\theta_{\\i})}}=1.
+$$
+
+Gibbs sampling의 가장 치명적인 단점은 conditional posterior distribution으로부터 샘플링이 쉽게 되어야 한다는 점이다. (이부분 만족시키기가 어렵지 않을까)
+
 ---
 - ## Markov Chain Monte Carlo
 
