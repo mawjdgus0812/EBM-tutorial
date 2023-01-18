@@ -1,9 +1,18 @@
 # Markov Chain Monte Carlo
 
+## Contents
+- [Rejection Sampling](#rejection-sampling)
+- [Importance Sampling](#importance-sampling)
+- [Markov Chain Monte Carlo](#markov-chain-monte-carlo)
+- [Metropolis-Hastings Algorithm](#metropolis-hastings-algorithm)
+- [Gibbs Sampling](#gibbs-sampling)
+- [Stochastic Gradient Lagevin Dynamics](#stochastic-gradient-langevin-dynamics)
+- References
+
 이름에 들어있는 Markov Chain과 Monte Carlo가 무엇인지 살펴보도록 하자.
 
-1. Monte Carlo
-2. Markov Chain
+1. [Monte Carlo](#monte-carlo-method)
+2. [Markov Chains](#markov-chains)
 
 아주아주 간단하게 두 방법론에 대해 설명하자면 다음과 같다.
 
@@ -11,7 +20,7 @@ Markov chain은 우리가 관심있어 하는 어떤 분포(posterior distributi
 
 Monte Carlo는 이렇게 뽑은 샘플을 사용해서 기댓값을 근사하는 방법이다.
 
-두 방법에 대해 조금 더 자세히 들엳 보도록 해보자.
+두 방법에 대해 조금 더 자세히 들여다 보도록 해보자.
 
 ## Monte Carlo Method
 
@@ -145,7 +154,7 @@ Gibbs sampling의 가장 치명적인 단점은 conditional posterior distributi
 In statistics, Markov chain Monte Carlo (MCMC) methods comprise a class of algorithms for sampling from a probability distribution. By constructing a Markov chain that has the desired distribution as its equilibrium distribution, one can obtain a sample of the desired distribution by recording states from the chain. The more steps that are included, the more closely the distribution of the sample matches the actual desired distribution. Various algorithms exist for constructing chains, including the Metropolis–Hastings algorithm.
 
 ---
-- ## Metropolis-Hastings
+- ## Metropolis-Hastings Algorithm
 
 ### Metropolis-Hastings Algorithm
 
@@ -179,7 +188,7 @@ Stochastic gradient Langevin dynamics (SGLD) is an optimization and sampling tec
 
 
 <details>
-<summary>References</summary>
+<summary> References </summary>
 <div>
 An Introduction to MCMC for Machine Learning
 
