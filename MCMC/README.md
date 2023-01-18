@@ -11,7 +11,7 @@
 - [Stochastic Gradient Lagevin Dynamics](#stochastic-gradient-langevin-dynamics)
 - References
 
-## Monte Carlo Method
+## [Monte Carlo Method](https://github.com/mawjdgus0812/EBM-tutorial/blob/main/MCMC/Monte%20Carlo%20estimation.ipynb)
 
 머신러닝에서, 분포 $p(\theta)$에 대한 기댓값 $f^*=\mathbb{E}[f(\theta)]$를 계산하는 것은 중요하다. Monte Carlo 방법은, 이러한 기댓값(integration when computing the exact value is intractable)을 근사하기 위해 사용하는 방법이다. 가장 일반적인 Monte Carlo 방법론의 아이디어는, 적분 불가능한 값을 분포 $p(\theta)$의 유한한 개수의 샘플로부터의 합으로 근사하는 아이디어이다. 구체적으로 설명하자면, $L$ samples $\{\theta^{(l)}\}^L_{l=1}$이 $p(\theta)$로 부터 샘플링 되었을 때, 우리는 기댓값을 다음과 같이 추정할 수 있다.
 
