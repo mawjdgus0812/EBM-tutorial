@@ -1,6 +1,8 @@
 # Markov Chain Monte Carlo
 
 ## Contents
+- [Monte Carlo](#monte-carlo-method)
+- [Markov Chains](#markov-chains)
 - [Rejection Sampling](#rejection-sampling)
 - [Importance Sampling](#importance-sampling)
 - [Markov Chain Monte Carlo](#markov-chain-monte-carlo)
@@ -8,19 +10,6 @@
 - [Gibbs Sampling](#gibbs-sampling)
 - [Stochastic Gradient Lagevin Dynamics](#stochastic-gradient-langevin-dynamics)
 - References
-
-이름에 들어있는 Markov Chain과 Monte Carlo가 무엇인지 살펴보도록 하자.
-
-1. [Monte Carlo](#monte-carlo-method)
-2. [Markov Chains](#markov-chains)
-
-아주아주 간단하게 두 방법론에 대해 설명하자면 다음과 같다.
-
-Markov chain은 우리가 관심있어 하는 어떤 분포(posterior distribution)로부터 샘플링하는 방법이다.
-
-Monte Carlo는 이렇게 뽑은 샘플을 사용해서 기댓값을 근사하는 방법이다.
-
-두 방법에 대해 조금 더 자세히 들여다 보도록 해보자.
 
 ## Monte Carlo Method
 
@@ -108,21 +97,75 @@ Energy based model과 같이 우리가 어떤 intratable한 integral을 직접 �
 
 - ## Rejection Sampling
 
-In numerical analysis and computational statistics, rejection sampling is a basic technique used to generate observations from a distribution. Rejection sampling is based on the observation that to sample a random variable in one dimension, one can perform a uniformly random sampling of the two-dimensional Cartesian graph, and keep the samples in the region under the graph of its density function. Note that this property can be extended to N-dimension functions
+Rejection Sampling이란 어떤 특정 확률 분포(target density) $f(x)$에서 샘플을 추출할 때, 우리가 이러한 target function의 pdf는 알고 있지만, 그 함수에서 직접 샘플링하는 것이 어렵거나 불가능할 때 사용되는 방법이다.
+
+- Rejection Sampling을 사용하기 위해서는 목표 확률 분포 $f(x)$의 확률밀도함수 (probability density function, PDF)를 알고 있어야 한다.
+- 제안분포 $g(x)$를 설정하여 이를 이용해 샘플을 추출하고자 한다.
+
+알고리즘은 다음과 같다.
+
+Set $i=1$ Repeat until $i=N$
+1. Sample $x^{(i)}\sim q(x)$ and $u\sim U_{(0,1)}$.
+2. If $u < {f(x^{(i)})\over{Mg(x^{(i)})}}$, then accept $x^{(i)}$ and increment the counter $i$ by 1. Otherwise, reject.
+
+![Screenshot 2023-01-19 at 4 39 21](https://user-images.githubusercontent.com/111332590/213278231-8b6b7cd9-a02f-49a6-9ad1-39d237944213.png)
 
 ---
 - ## Importance Sampling
 
-Importance sampling is a Monte Carlo method for **evaluating properties of a particular distribution**, while only having samples generated from a different distribution than the distribution of interest. Importance sampling is also related to umbrella sampling in computational physics. Depending on the application, the term may refer to the process of sampling from this alternative distribution, the process of inference, or both.
+Rejection Samplig(기각 샘플링)의 경우, 샘플 추출시에 reject 비율이 굉장히 크다. 따라서 원하는 크기의 표본을 얻기까지 오랜시간이 걸리게 된다. 이러한 단점을 보완하는 샘플링 방법중에, wasted sample이 없도록 표본추출하는 방법을 Inportance sampling이라고 한다.
+
+샘플링의 가장 큰 목적은 두가지이다.
+
+1. 특정 확률밀도함수의 기댓값 계산
+2. 특정 확률값 계산
+
+따라서, 어떤 특정 값의 계산을 위해 샘플링을 한다면, 그 값을 필요로 하는 것이기 때문에 많은 표본을 추출할 필요가 없다. 즉 , 표본 추출시 버려지는 샘플이 없도록 효율적으로 샘플링을 한다는 말이다.
+
+어떤 함수 $h(x)$에 대해서 기댓값은 다음과 같다.
+
+$$E_f[h(x)]=\int h(x)f(x)dx$$
+
+이 때, 원래 $f(x)$를 추출하는 것이 어려워, proposal distribution g(x)를 이용한 샘플링 방법이 존재한다. 여기서도 마찬가지로 $f(x)$에서 바로 샘플링 할 수 없기 때문에, $g(x)$에서 대신 샘플링 할 것이다.
+
+$$E_f[h(x)]=\int h(x)f(x)dx = \int h(x){f(x)\over{g(x)}}g(x)dx=E_g[h(x){f(x)\over{g(x)}}]$$
+
+이를 Monte Carlo Estimation을 통해 근사하면
+
+$$E_f[h(x)]\approx {1\over{n}}\sum^n_{i=1}h(x_i){f(x_i)\over{g(x_i)}}$$
+
+이 식을 다시 정리하면
+
+$$E_f[h(x)]\approx {1\over{n}}\sum^n_{i=1}h(x_i){f(x_i)\over{g(x_i)}}={1\over{n}}\sum^n_{i=1}w(x_i)h(x_i) \: \text{weight:}w(x_i)={f(x_i)\over{g(x_i)}}$$
+
+This applies when $P$ and $Q$ are both normalized
+
+For unnormalized case
+
+$$\mathbb{E}_{x\sim P}[f(x)]\approx{{\Sigma^n_{i=1}f(x_i){P(x_i)\over{Q(x_i)}}\over{\Sigma^n_{i=1}{P(x_i)\over{Q(x_i)}}}}}$$
+
+---
+- ## Markov Chain Monte Carlo
+
+이름에 들어있는 Markov Chain과 Monte Carlo가 무엇인지 살펴보도록 하자.
+
+1. [Monte Carlo](#monte-carlo-method)
+2. [Markov Chains](#markov-chains)
+
+아주아주 간단하게 두 방법론에 대해 설명하자면 다음과 같다.
+
+Markov chain은 우리가 관심있어 하는 어떤 분포(posterior distribution)로부터 샘플링하는 방법이다.
+
+Monte Carlo는 이렇게 뽑은 샘플을 사용해서 기댓값을 근사하는 방법이다.
+
+예를 들어, Bayesian inference에서는 우리는 posterior distribution으로 부터 샘플링을 해 posterior predictive distribution에 대해 근사할 수 있다.
+
+$$p(y^\prime|x^\prime,\mathcal{D})=\mathbb{E}_{\theta|\mathcal{D}}[p(y^\prime|x^\prime,\theta)]=\int p(y^\prime|x^\prime,\theta)p(\theta|\mathcal{D})\text{d}\theta\approx{1\over{L}}\sum^L_{l=1}p(y^\prime|x^\prime,\theta^{(l)}).$$
+
+이 때, 위 식을 구하기 위해서는 posterior distribution에서의 sampling과정이 필요한데, 이러한 과정이 일반적인 sampling으로 쉽게 진행될 수 없다. 고차원의 데이터에서도 잘 작동하는 여러 MCMC sampling을 통해 이를 가능케 할 수 있다.
 
 ---
 - ## Gibbs Sampling
-
-In statistics, Gibbs sampling or a Gibbs sampler is a Markov chain Monte Carlo (MCMC) algorithm for obtaining a sequence of observations which are approximated from a specified multivariate probability distribution, when direct sampling is difficult. This sequence can be used to approximate the joint distribution (e.g., to generate a histogram of the distribution); to approximate the marginal distribution of one of the variables, or some subset of the variables (for example, the unknown parameters or latent variables); or to compute an integral (such as the expected value of one of the variables). Typically, some of the variables correspond to observations whose values are known, and hence do not need to be sampled.
-
-Gibbs sampling is commonly used as a means of statistical inference, especially Bayesian inference. It is a randomized algorithm (i.e. an algorithm that makes use of random numbers), and is an alternative to deterministic algorithms for statistical inference such as the expectation-maximization algorithm (EM).
-
-As with other MCMC algorithms, Gibbs sampling generates a Markov chain of samples, each of which is correlated with nearby samples. As a result, care must be taken if independent samples are desired. Generally, samples from the beginning of the chain (the burn-in period) may not accurately represent the desired distribution and are usually discarded.
 
 Gibbs sampling은 강력한 MCMC알고리즘으로, 
 
@@ -145,11 +188,6 @@ $$
 $$
 
 Gibbs sampling의 가장 치명적인 단점은 conditional posterior distribution으로부터 샘플링이 쉽게 되어야 한다는 점이다. (이부분 만족시키기가 어렵지 않을까)
-
----
-- ## Markov Chain Monte Carlo
-
-In statistics, Markov chain Monte Carlo (MCMC) methods comprise a class of algorithms for sampling from a probability distribution. By constructing a Markov chain that has the desired distribution as its equilibrium distribution, one can obtain a sample of the desired distribution by recording states from the chain. The more steps that are included, the more closely the distribution of the sample matches the actual desired distribution. Various algorithms exist for constructing chains, including the Metropolis–Hastings algorithm.
 
 ---
 - ## Metropolis-Hastings Algorithm
