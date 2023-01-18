@@ -6,7 +6,7 @@
 ## Energy-based-Model
 - [A Tutorial on Energy-Based Learning(paper)](http://yann.lecun.com/exdb/publis/pdf/lecun-06.pdf)
 - [Your Classifier Is Secretly An Energy Based Model And You Should Treat It Like One](https://github.com/mawjdgus0812/EBM-tutorial/tree/main/Energy-based-model/JEM)
-- Energy-Based Contrastive Learning of Visual Representations](https://github.com/mawjdgus0812/EBM-tutorial/tree/main/Energy-based-model/EBCLR)
+- [Energy-Based Contrastive Learning of Visual Representations](https://github.com/mawjdgus0812/EBM-tutorial/tree/main/Energy-based-model/EBCLR)
 
 ---
 
