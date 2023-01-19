@@ -33,7 +33,7 @@ $$\text{var}[f_L]={\text{var}[f]\over{L}}$$
 
 따라서 샘플이 많아지면 많아질수록 높은 정확도르 얻을 수 있다.
 
-이제 문제는 이러한 "target distribution으로부터 샘플을 어떻게 얻을 것인가 ?" 이다. 특별히, 우리가 $p(\theta)$의 unnormalized part $\tilde{p}(\theta)$에 대해 평가할 때이다. 이 때, inverse cdf method, rejection sampling, importance sampling과 같은 방법들이 있지만 해당 방법론들은 각각의 문제점이 존재한다. 따라서 Markov chain Monte Carlo가 이 문제를 해결하기 위해 등장한다.
+이제 문제는 이러한 "target distribution으로부터 샘플을 어떻게 얻을 것인가 ?" 이다. 특히, $p(\theta)$의 unnormalized part $\tilde{p}(\theta)$에 대해 평가할 때이다(여기서 말하는 unnormalized part는, Bayesian Inference에서는 **아마도**(확인 필요), posterior distribution을 Bayes rule에 의해 정리했을 때, normalized term인 $p(\mathcal{D})$를 신경쓰지 않는 unnormalized part를 의미하는 것). 이 때, inverse cdf method, rejection sampling, importance sampling과 같은 방법들이 있지만 해당 방법론들은 각각의 문제점이 존재한다. 따라서 Markov chain Monte Carlo가 이 문제를 해결하기 위해 등장한다.
 
 ## [Markov Chains](https://github.com/mawjdgus0812/EBM-tutorial/blob/main/MCMC/Markov_Chains.ipynb)
 
