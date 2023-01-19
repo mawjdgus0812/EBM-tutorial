@@ -167,31 +167,6 @@ $$p(y^\prime|x^\prime,\mathcal{D})=\mathbb{E}_{\theta|\mathcal{D}}[p(y^\prime|x^
 이 때, 위 식을 구하기 위해서는 posterior distribution에서의 sampling과정이 필요한데, 이러한 과정이 일반적인 sampling으로 쉽게 진행될 수 없다. 고차원의 데이터에서도 잘 작동하는 여러 MCMC sampling을 통해 이를 가능케 할 수 있다.
 
 ---
-- ## [Gibbs Sampling](https://github.com/mawjdgus0812/EBM-tutorial/blob/main/MCMC/Gibbs%20sampling.ipynb)
-
-Gibbs sampling은 강력한 MCMC알고리즘으로, 
-
-Gibbs sampling을 coordinate-wise sampling method로 볼 수 있다. 좀 더 구체적으로, distribution $p(\theta)=p(\theta_1,...,\theta_D)$로 부터 샘플링 하기 를 원한다고 해보자. 우리는 $\theta$의 $i$ 번째 요소를 $\theta_i$라 하고, $\theta_{\\i}$ 를 $\theta_i$를 제외한 모든 $\theta_1,..,\theta_D$라고 할 것이다. Gibbs sampling은 conditional distribution $p(\theta_i|\theta_{\\i})$를 proposal distribution으로서 사용하고, $i$를 component index로 변환시키면서 샘플을 뽑는다.
-
-예를들어 $D=3$이라고 할때, 각 iteration $t$에서, 우리는 sampling을 다음과 같이 할 수 있다.
-
-$$
-\theta_1^{(t+1)}\sim p(\theta_1|\theta_2^{(t)},\theta_3^{(t)}),\:\theta_2^{(t+1)}\sim p(\theta_2|\theta_1^{(t+1)},\theta_3^{(t)}),\: \text{and}\:\:\theta_3^{(t+1)}\sim p(\theta_3|\theta_1^{(t+1)},\theta_2^{(t+1)})
-$$
-
-![Screenshot 2023-01-19 at 3 51 46](https://user-images.githubusercontent.com/111332590/213268855-3d58ff8b-28f8-4297-9f7e-94aa8f2ecf4a.png)
-
-각각의 업데이트는 distribution의 invariant를 보존한다. $i$번째 component를 업데이트할 때, marginal distribution $p(\theta_{\\i})$는 바뀌지 않는다. 왜냐면 remaining variables인 $\theta_{\\i}$를 업데이트 하지 않기 때문이다. 그리고  정의에 의해 우리는 conditional distribution $p(\theta_i,\theta_{\\i})$로부터 정확히 샘플링 한다. 따라서 joint distribution은 invariant하다.
-
-Gibbs sampling은 Metropolis-Hasting algorithm의 한 종류로 볼 수 있는데, proposal distribution이 conditional distribution인 $q(\theta_i|\theta)=p(\theta_i|\theta_{\\i})$인 경우로 볼 수 있다. 그렇다면 $\min(1, r)$에서의 ratio $r$은 항상 1이되며 따라서 언제나 proposal이 accept된다.
-
-$$
-{p(\theta^\prime_i|\theta_{\\i})p(\theta_{\\i})\over{p(\theta_i|\theta_{\\i})p(\theta_{\\i})}}\times{p(\theta_i|\theta_{\\i})\over{p(\theta^\prime_i|\theta_{\\i})}}=1.
-$$
-
-Gibbs sampling의 가장 치명적인 단점은 conditional posterior distribution으로부터 샘플링이 쉽게 되어야 한다는 점이다. (이부분 만족시키기가 어렵지 않을까)
-
----
 - ## [Metropolis-Hastings Algorithm](https://github.com/mawjdgus0812/EBM-tutorial/blob/main/MCMC/Metropolis-Hastings.ipynb)
 
 MCMC의 가장 대표적인 알고리즘으로 Metropolis-Hastings라는 알고리즘이 존재한다. 이 알고리즘은 다음과 같이 작동한다. 현재 state $\theta^{(t)}$, iteration $t$ 에서, 우리는 proposal sample $\theta^\prime$을 proposal distribution $q(\theta^\prime|\theta^{(t)})$에서 부터 추출한다. 이 때, proposal distribution은 우리가 정해주면 된다. 그러고나서, proposed sample $\theta^\prime$이 accept-reject test를 통과하여 acceptance probability를 다음과 같이 계산해준다.
@@ -217,7 +192,32 @@ continuous space에서, proposal distribution( $q(\theta^\prime|\theta))$ )는 G
 Gaussian proposal distribution을 사용했을 때 한가지 문제점은, 우리가 실제로 target probability distribution의 gradient를 사용하여 acceptance probability를 결정하는 것과 같이 명확한 direction을 가지고 step을 이어 가는 것을 고려할 수 없다는 점이다.
 
 ---
-- ## [Stochastic Gradient Langevin Dynamics](https://github.com/mawjdgus0812/EBM-tutorial/tree/main/MCMC/SGLD)
+- ## [Gibbs Sampling](https://github.com/mawjdgus0812/EBM-tutorial/blob/main/MCMC/Gibbs%20sampling.ipynb)
+
+Gibbs sampling은 강력한 MCMC알고리즘으로, 
+
+Gibbs sampling을 coordinate-wise sampling method로 볼 수 있다. 좀 더 구체적으로, distribution $p(\theta)=p(\theta_1,...,\theta_D)$로 부터 샘플링 하기 를 원한다고 해보자. 우리는 $\theta$의 $i$ 번째 요소를 $\theta_i$라 하고, $\theta_{\\i}$ 를 $\theta_i$를 제외한 모든 $\theta_1,..,\theta_D$라고 할 것이다. Gibbs sampling은 conditional distribution $p(\theta_i|\theta_{\\i})$를 proposal distribution으로서 사용하고, $i$를 component index로 변환시키면서 샘플을 뽑는다.
+
+예를들어 $D=3$이라고 할때, 각 iteration $t$에서, 우리는 sampling을 다음과 같이 할 수 있다.
+
+$$
+\theta_1^{(t+1)}\sim p(\theta_1|\theta_2^{(t)},\theta_3^{(t)}),\:\theta_2^{(t+1)}\sim p(\theta_2|\theta_1^{(t+1)},\theta_3^{(t)}),\: \text{and}\:\:\theta_3^{(t+1)}\sim p(\theta_3|\theta_1^{(t+1)},\theta_2^{(t+1)})
+$$
+
+![Screenshot 2023-01-19 at 3 51 46](https://user-images.githubusercontent.com/111332590/213268855-3d58ff8b-28f8-4297-9f7e-94aa8f2ecf4a.png)
+
+각각의 업데이트는 distribution의 invariant를 보존한다. $i$번째 component를 업데이트할 때, marginal distribution $p(\theta_{\\i})$는 바뀌지 않는다. 왜냐면 remaining variables인 $\theta_{\\i}$를 업데이트 하지 않기 때문이다. 그리고  정의에 의해 우리는 conditional distribution $p(\theta_i,\theta_{\\i})$로부터 정확히 샘플링 한다. 따라서 joint distribution은 invariant하다.
+
+Gibbs sampling은 Metropolis-Hasting algorithm의 한 종류로 볼 수 있는데, proposal distribution이 conditional distribution인 $q(\theta_i|\theta)=p(\theta_i|\theta_{\\i})$인 경우로 볼 수 있다. 그렇다면 $\min(1, r)$에서의 ratio $r$은 항상 1이되며 따라서 언제나 proposal이 accept된다.
+
+$$
+{p(\theta^\prime_i|\theta_{\\i})p(\theta_{\\i})\over{p(\theta_i|\theta_{\\i})p(\theta_{\\i})}}\times{p(\theta_i|\theta_{\\i})\over{p(\theta^\prime_i|\theta_{\\i})}}=1.
+$$
+
+Gibbs sampling의 가장 치명적인 단점은 conditional posterior distribution으로부터 샘플링이 쉽게 되어야 한다는 점이다. (이부분 만족시키기가 어렵지 않을까)
+
+---
+- ## [Stochastic Gradient Langevin Dynamics](https://github.com/mawjdgus0812/EBM-tutorial/tree/main/MCMC/SGLD)[not yet]
 
 Stochastic gradient Langevin dynamics (SGLD) is an optimization and sampling technique composed of characteristics from Stochastic gradient descent, a Robbins–Monro optimization algorithm, and Langevin dynamics, a mathematical extension of molecular dynamics models. Like stochastic gradient descent, SGLD is an iterative optimization algorithm which uses minibatching to create a stochastic gradient estimator, as used in SGD to optimize a differentiable objective function. Unlike traditional SGD, SGLD can be used for Bayesian learning as a sampling method. SGLD may be viewed as Langevin dynamics applied to posterior distributions, but the key difference is that the likelihood gradient terms are minibatched, like in SGD. SGLD, like Langevin dynamics, produces samples from a posterior distribution of parameters based on available data. First described by Welling and Teh in 2011, the method has applications in many contexts which require optimization, and is most notably applied in machine learning problems.
 
